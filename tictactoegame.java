@@ -57,6 +57,7 @@ public class tictactoegame {
             System.out.println();
             System.out.println("-------------");
         }
+
     }
 
     private boolean isValidMove(int row, int col) {
