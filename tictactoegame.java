@@ -28,9 +28,9 @@ public class tictactoegame {
         System.out.println("Spieler X beginnt.");
 
         while (gameRunning) {
-            printGameState();
-            System.out.println("Spieler " + currentPlayer + ", gib deine Zugkoordinaten ein (Zeile Spalte):");
+            printGameState(); // Zeige den aktuellen Spielstand
 
+            System.out.println("Spieler " + currentPlayer + ", gib deine Zugkoordinaten ein (Zeile Spalte):");
             int row = scanner.nextInt();
             int col = scanner.nextInt();
 
