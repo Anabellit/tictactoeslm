@@ -53,6 +53,16 @@ public class tictactoegame {
             }
         }
 
+        // Spiel ist beendet, frage den Spieler nach einem neuen Spiel
+        System.out.println("Möchtest du ein neues Spiel starten? (ja/nein)");
+        String answer = scanner.next();
+        if (answer.equalsIgnoreCase("ja")) {
+            resetGame();
+            startGame(); // Starte ein neues Spiel rekursiv
+        } else {
+            System.out.println("Vielen Dank fürs Spielen!");
+        }
+
         scanner.close();
     }
 
@@ -104,6 +114,11 @@ public class tictactoegame {
             }
         }
         return true;
+    }
+
+    private void resetGame() {
+        initializeBoard(); // Setze das Spielfeld zurück
+        currentPlayer = 'X'; // Setze den Startspieler zurück
     }
 
     public static void main(String[] args) {
