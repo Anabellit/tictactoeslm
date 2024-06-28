@@ -6,8 +6,8 @@ public class tictactoegame {
     private char currentPlayer;
 
     public tictactoegame() {
-        board = new char[3][3]; // 3x3 Spielfeld für Tic-Tac-Toe
-        currentPlayer = 'X'; // Spieler X beginnt
+        board = new char[3][3];
+        currentPlayer = 'X';
         initializeBoard();
     }
 
@@ -37,7 +37,7 @@ public class tictactoegame {
 
             if (coordinates.length != 2) {
                 System.out.println("Ungültige Eingabe! Bitte gib Zeile und Spalte durch Leerzeichen getrennt ein.");
-                continue; // Zurück zur Eingabeaufforderung
+                continue;
             }
 
             int row, col;
@@ -46,13 +46,23 @@ public class tictactoegame {
                 col = Integer.parseInt(coordinates[1]) - 1;
             } catch (NumberFormatException e) {
                 System.out.println("Ungültige Eingabe! Bitte gib gültige Zahlen für Zeile und Spalte ein.");
-                continue; // Zurück zur Eingabeaufforderung
+                continue;
             }
 
             if (isValidMove(row, col)) {
                 board[row][col] = currentPlayer;
-                currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
-                System.out.println("Spieler " + currentPlayer + " muss einen Zug machen.");
+                if (checkWin()) {
+                    printBoard();
+                    System.out.println("Spieler " + currentPlayer + " hat gewonnen!");
+                    gameRunning = false;
+                } else if (isBoardFull()) {
+                    printBoard();
+                    System.out.println("Das Spiel endet unentschieden!");
+                    gameRunning = false;
+                } else {
+                    currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+                    System.out.println("Spieler " + currentPlayer + " muss einen Zug machen.");
+                }
             } else {
                 System.out.println("Ungültiger Zug! Bitte gib gültige Koordinaten ein.");
             }
@@ -75,6 +85,33 @@ public class tictactoegame {
 
     private boolean isValidMove(int row, int col) {
         return row >= 0 && row < 3 && col >= 0 && col < 3 && board[row][col] == '-';
+    }
+
+    private boolean checkWin() {
+        // Überprüfe Zeilen und Spalten
+        for (int i = 0; i < 3; i++) {
+            if ((board[i][0] == currentPlayer && board[i][1] == currentPlayer && board[i][2] == currentPlayer) ||
+                    (board[0][i] == currentPlayer && board[1][i] == currentPlayer && board[2][i] == currentPlayer)) {
+                return true;
+            }
+        }
+        // Überprüfe Diagonalen
+        if ((board[0][0] == currentPlayer && board[1][0] == currentPlayer && board[2][0] == currentPlayer) ||
+                (board[0][2] == currentPlayer && board[1][2] == currentPlayer && board[2][2] == currentPlayer)) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isBoardFull() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board[i][j] == '-') {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public static void main(String[] args) {
