@@ -11,7 +11,7 @@ public class tictactoegame {
         initializeBoard();
     }
 
-    private void initializeBoard() {
+    void initializeBoard() {
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -104,11 +104,11 @@ public class tictactoegame {
         }
     }
 
-    private boolean isValidMove(int row, int col) {
+    protected boolean isValidMove(int row, int col) {
         return row >= 0 && row < 3 && col >= 0 && col < 3 && board[row][col] == '-';
     }
 
-    private boolean checkWin() {
+    protected boolean checkWin() {
         // Überprüfe Zeilen und Spalten
         for (int i = 0; i < 3; i++) {
             if ((board[i][0] == currentPlayer && board[i][1] == currentPlayer && board[i][2] == currentPlayer) ||
@@ -124,7 +124,7 @@ public class tictactoegame {
         return false;
     }
 
-    private boolean isBoardFull() {
+    protected boolean isBoardFull() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (board[i][j] == '-') {
@@ -138,5 +138,13 @@ public class tictactoegame {
     public static void main(String[] args) {
         tictactoegame game = new tictactoegame();
         game.startGame();
+    }
+
+    public char[][] getBoard() {
+        return board;
+    }
+
+    public void setBoard(char[][] board) {
+        this.board = board;
     }
 }
