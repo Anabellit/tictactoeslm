@@ -12,7 +12,7 @@ public class tictactoegame {
     }
 
     private void initializeBoard() {
-        // Initialisiere das Spielfeld mit leeren Feldern
+
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 board[i][j] = '-';
@@ -28,6 +28,30 @@ public class tictactoegame {
         System.out.println("Spieler X beginnt.");
 
         while (gameRunning) {
+            playGame(scanner);
+
+
+            System.out.print("Möchten Sie ein neues Spiel spielen? (ja/nein): ");
+            String playAgain = scanner.nextLine().trim().toLowerCase();
+
+            if (!playAgain.equals("ja")) {
+                gameRunning = false;
+            } else {
+
+                initializeBoard();
+                currentPlayer = 'X';
+                System.out.println("\nNeues Spiel gestartet!");
+            }
+        }
+
+        System.out.println("Vielen Dank fürs Spielen!");
+        scanner.close();
+    }
+
+    private void playGame(Scanner scanner) {
+        boolean gameEnded = false;
+
+        while (!gameEnded) {
             printBoard();
             System.out.println("Spieler " + currentPlayer + ", gib deine Zugkoordinaten ein (Zeile Spalte):");
 
@@ -54,21 +78,18 @@ public class tictactoegame {
                 if (checkWin()) {
                     printBoard();
                     System.out.println("Spieler " + currentPlayer + " hat gewonnen!");
-                    gameRunning = false;
+                    gameEnded = true;
                 } else if (isBoardFull()) {
                     printBoard();
                     System.out.println("Das Spiel endet unentschieden!");
-                    gameRunning = false;
+                    gameEnded = true;
                 } else {
                     currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
-                    System.out.println("Spieler " + currentPlayer + " muss einen Zug machen.");
                 }
             } else {
                 System.out.println("Ungültiger Zug! Bitte gib gültige Koordinaten ein.");
             }
         }
-
-        scanner.close();
     }
 
     private void printBoard() {
@@ -96,8 +117,8 @@ public class tictactoegame {
             }
         }
         // Überprüfe Diagonalen
-        if ((board[0][0] == currentPlayer && board[1][0] == currentPlayer && board[2][0] == currentPlayer) ||
-                (board[0][2] == currentPlayer && board[1][2] == currentPlayer && board[2][2] == currentPlayer)) {
+        if ((board[0][0] == currentPlayer && board[1][1] == currentPlayer && board[2][2] == currentPlayer) ||
+                (board[0][2] == currentPlayer && board[1][1] == currentPlayer && board[2][0] == currentPlayer)) {
             return true;
         }
         return false;
