@@ -1,4 +1,3 @@
-
 import java.util.Scanner;
 
 public class tictactoegame {
@@ -32,13 +31,28 @@ public class tictactoegame {
             printBoard();
             System.out.println("Spieler " + currentPlayer + ", gib deine Zugkoordinaten ein (Zeile Spalte):");
 
-            int row = scanner.nextInt();
-            int col = scanner.nextInt();
+            // Eingabe als String einlesen und in Zeile und Spalte aufteilen
+            String input = scanner.nextLine().trim();
+            String[] coordinates = input.split("\\s+");
+
+            if (coordinates.length != 2) {
+                System.out.println("Ungültige Eingabe! Bitte gib Zeile und Spalte durch Leerzeichen getrennt ein.");
+                continue; // Zurück zur Eingabeaufforderung
+            }
+
+            int row, col;
+            try {
+                row = Integer.parseInt(coordinates[0]) - 1;
+                col = Integer.parseInt(coordinates[1]) - 1;
+            } catch (NumberFormatException e) {
+                System.out.println("Ungültige Eingabe! Bitte gib gültige Zahlen für Zeile und Spalte ein.");
+                continue; // Zurück zur Eingabeaufforderung
+            }
 
             if (isValidMove(row, col)) {
                 board[row][col] = currentPlayer;
-                // Weitere Logik wird später hinzugefügt
                 currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+                System.out.println("Spieler " + currentPlayer + " muss einen Zug machen.");
             } else {
                 System.out.println("Ungültiger Zug! Bitte gib gültige Koordinaten ein.");
             }
@@ -57,7 +71,6 @@ public class tictactoegame {
             System.out.println();
             System.out.println("-------------");
         }
-
     }
 
     private boolean isValidMove(int row, int col) {
